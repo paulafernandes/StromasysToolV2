@@ -1,0 +1,93 @@
+{% extends "tco_app/index.html" %}
+
+{% block content %}
+<div class="content-section" id="divSearch">
+    <form id="frmSim" method="POST" class="needs-validation" novalidate>
+		{% csrf_token %}
+		<div class="form-group">
+			<label for="allsystems">System</label>
+			<select class="form-control" id="allsystems" required>
+				<option value="">Select System</option>
+				{% for s in systems %}
+				<option value="{{ s.id }}">{{ s.system_name }}</option>
+				{% endfor %}
+			</select>
+            <div class="invalid-feedback">Please select a system</div>
+		</div>
+		<div class="form-group" style="display:none" id="divModels">
+			<label for="allmodels">Model</label>
+			<select class="form-control" id="allmodels" required>
+				<option value="">Select Model</option>
+			</select>
+            <div class="invalid-feedback">Please select a model</div>
+		</div>
+		<div class="form-group" style="display:none" id="divCpus">
+			<label for="allcpus">CPU</label>
+			<select class="form-control" id="allcpus" required>
+				<option value="">Select CPU</option>
+			</select>
+            <div class="invalid-feedback">Please select CPU's</div>
+		</div>
+		<div class="form-group" style="display:none" id="lblCpu">
+			<label for="cpulabel">CPU</label>
+			<input type="text" class="form-control" id="cpulabel" disabled />
+		</div>
+		<div class="row">
+			<div class="col-8">
+				<div class="form-group" style="display:none" id="divPay">
+					<label for="txtPay">How much do you pay per year?</label>
+					<input type="number" class="form-control" id="txtPay" required />
+                    <div class="invalid-feedback">Please insert a value</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group" style="display:none" id="divCurrency">
+					<label for="allcurrency">Currency</label>
+					<select class="form-control" id="allcurrency" required>
+						<option value="">Select Currency</option>
+                        {% for c in currency %}
+						<option value="{{ c.iso_code }}">{{ c.country }}</option>
+                        {% endfor %}
+					</select>
+                    <div class="invalid-feedback">Please select a currency</div>
+				</div>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary btn-block" style="display:none" id="btnSim">Continue</button>
+	</form>
+</div>
+<div class="content-section" id="divResults" style="display:none">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				You could save <span class="badge badge-success" id="lblf_total_savings_currency"></span>, a reduction of <span class="badge badge-success" id="lblreduction_of"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				You could save up to <span class="badge badge-success" id="lbli_power_savings"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				The carbon footprint for a year is <span class="badge badge-success" id="lbli_carbon_footprint_legacy"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				You can reduce your carbon footprint up to <span class="badge badge-success" id="lbli_carbon_footprint_savings"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				You can reduce your floor space up to <span class="badge badge-success">99.9%</span>
+			</div>
+		</div>
+		<div class="row mt-5">
+			<div class="col">
+                <a class="btn btn-primary btn-block" href="{% url 'sims-page' %}" role="button">New simulation</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
