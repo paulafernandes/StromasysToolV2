@@ -5,4 +5,5 @@ myvenv
 # db.sqlite3
 /static
 .DS_Store
-data/
+data/git res
+tco_app/migrations

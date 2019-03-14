@@ -38,17 +38,28 @@ def all_json_models(request, pk):
     return HttpResponse(json_models, content_type='application/javascript')
 
 def all_json_cpus(request, pk):
-    # sys.stderr.write('*********************: ' + pk)
-    cpus = CpuTable.objects.all().filter(id_model=pk)
-    json_cpus = serializers.serialize('json', cpus)
-    return HttpResponse(json_cpus, content_type='application/javascript')
+    cpus = CpuTable.objects.filter(id_model=pk)
+    # cpus = CpuTable.objects.all()
+    cpu_lst = []
+    for c in cpus:
+        c_dct = {}
+        c_dct['pk'] = str(c.pk)
+        c_dct['id_model'] = str(c.id_model)
+        c_dct['id_licence'] = str(c.id_licence)
+        c_dct['id_cpu_value'] = str(c.id_cpu_value)
+        c_dct['id_memory_value'] = str(c.id_memory_value)
+        cpu_lst.append(c_dct)
+    # sys.stderr.write(json_cpus)
+    # return HttpResponse(json_cpus, content_type='application/javascript')
+    return HttpResponse(json.dumps(cpu_lst), content_type='application/javascript')
+
 
 def json_simulation(request, cpu, f_maintenance, currency):
     ####### Constants ##########
     f_power_instance = 150
     f_carbon_footprint = 0.744
     f_support = 467
-    i_generic_power = 350
+    # i_generic_power = 350
     ####### Constants ##########
 
     ######## DB QUERIES ##########

@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			currency = $( "#allcurrency option:selected" ).val();
 			var url = "/simulation_page/" + idcpu + "/" + payperyear + "/" + currency + "/json_simulation/";
 			$.getJSON(url, function(savings) {
-				console.log(JSON.stringify(savings));
+				// console.log(JSON.stringify(savings));
 				$("#divSearch").css('display', 'none');
 				$("#divResults").css('display', 'block');
 				$("#lblf_total_savings_currency").html(savings.f_total_savings_currency);
@@ -84,22 +84,19 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
             var url = "/simulation_page/" + $(this).val() + "/all_json_cpus/";
             $.getJSON(url, function(cpus) {
-                // console.log(JSON.stringify(cpus));
                 var options = '<option selected value="">Select CPU</option>';
+                console.log(JSON.stringify(cpus));
+                console.log(cpus[0])
                 if (cpus.length == 1)
                 {
-                    $("#cpulabel").val(cpus[0].fields["min_cpu"]);
+                    $("#cpulabel").val(cpus[0].id_cpu_value);
                     $("#cpulabel").attr('cpuid', cpus[0].pk);
                     $("#lblCpu").css('display', 'block');
                     $("#divCpus").css('display', 'none');
 				}
                 else {
 					for (var i = 0; i < cpus.length; i++) {
-                        let labelcpu;
-                        if (cpus[i].fields["max_cpu"] > 0)
-						labelcpu = cpus[i].fields["min_cpu"] + ' - ' + cpus[i].fields["max_cpu"];
-                        else 
-						labelcpu = cpus[i].fields["min_cpu"];
+						let labelcpu = cpus[i].id_cpu_value;
 						
                         options += '<option value="' + cpus[i].pk + '">' + labelcpu + '</option>';
                         $("select#allcpus").html(options);

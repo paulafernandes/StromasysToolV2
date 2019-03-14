@@ -24,15 +24,35 @@ class LicenceTable(models.Model):
     def __str__(self):
         return self.licence_name
 
-class CpuTable(models.Model):
-    min_cpu = models.IntegerField(default=0)
-    max_cpu = models.IntegerField(default=0)
-    id_model = models.ForeignKey(ModelTable, on_delete=models.CASCADE)
-    id_licence = models.ForeignKey(LicenceTable, on_delete=models.CASCADE)
+class CpuValueTable(models.Model):
+    cpu_value = models.CharField(max_length=30, default='0')
 
     def __str__(self):
-        return str(self.id_model) + ' ' + str(self.min_cpu) + ' - ' + str(self.max_cpu) + ' CPU'
-        # return self.id_model + ' ' + self.min_cpu + ' - ' + self.max_cpu + ' CPU'
+        return '{}'.format(self.cpu_value)
+
+    def __repr__(self):
+        return '{}'.format(self.cpu_value)
+
+class MemoryValueTable(models.Model):
+    memory_value = models.CharField(max_length=30, default='0')
+
+    def __str__(self):
+        return '{}'.format(self.memory_value)
+
+    def __repr__(self):
+        return '{}'.format(self.memory_value)
+
+class CpuTable(models.Model):
+    id_model = models.ForeignKey(ModelTable, on_delete=models.CASCADE)
+    id_licence = models.ForeignKey(LicenceTable, on_delete=models.CASCADE)
+    id_cpu_value = models.ForeignKey(CpuValueTable, on_delete=models.CASCADE, default=0)
+    id_memory_value = models.ForeignKey(MemoryValueTable, on_delete=models.CASCADE, default=0) 
+
+    def __str__(self):
+        return '{}, {}, {}, {}'.format(self.id_model, self.id_licence, self.id_cpu_value, self.id_memory_value)
+
+    def __repr__(self):
+        return '{} - {} CPU, {} MB '.format(self.id_model, self.id_cpu_value, self.id_memory_value)
 
 class CurrencyTable(models.Model):
     country = models.CharField(max_length=50)
@@ -40,4 +60,4 @@ class CurrencyTable(models.Model):
     locale_code = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.country) + ', ' + str(self.iso_code) + ', ' + str(self.locale_code)
+        return '{}, ISO CODE: {}, LOCALE: {}'.format(self.country, self.iso_code, self.locale_code)
