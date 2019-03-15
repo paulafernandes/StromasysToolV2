@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currency = $( "#allcurrency option:selected" ).val();
             var url = "/simulation_page/" + idcpu + "/" + payperyear + "/" + currency + "/json_simulation/";
             $.getJSON(url, function(savings) {
-                console.log(JSON.stringify(savings));
+                // console.log(JSON.stringify(savings));
                 $("#divSearch").css('display', 'none');
                 $("#divResults").css('display', 'block');
                 $("#lblf_total_savings_currency").html(savings.f_total_savings_currency);

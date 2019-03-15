@@ -59,7 +59,7 @@ def json_simulation(request, cpu, f_maintenance, currency):
     f_power_instance = 150
     f_carbon_footprint = 0.744
     f_support = 467
-    # i_generic_power = 350
+    #### i_generic_power = 350
     ####### Constants ##########
 
     ######## DB QUERIES ##########

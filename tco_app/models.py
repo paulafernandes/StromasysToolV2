@@ -1,5 +1,4 @@
 from django.db import models
-# from django. import serializers
 
 # Create your models here.
 class SystemTable(models.Model):
