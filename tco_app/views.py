@@ -49,7 +49,7 @@ def all_json_cpus(request, pk):
         c_dct['id_cpu_value'] = str(c.id_cpu_value)
         c_dct['id_memory_value'] = str(c.id_memory_value)
         cpu_lst.append(c_dct)
-    # sys.stderr.write(json_cpus)
+    # sys.stderr.write('******** cpu_lst *********' + str(cpu_lst))
     # return HttpResponse(json_cpus, content_type='application/javascript')
     return HttpResponse(json.dumps(cpu_lst), content_type='application/javascript')
 

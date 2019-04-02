@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $.getJSON(url, function(cpus) {
                 var options = '<option selected value="">Select CPU</option>';
                 var optionsmem = '<option selected value="">Select Memory</option>';
-                // console.log(JSON.stringify(cpus));
+                console.log(JSON.stringify(cpus));
                 // console.log(cpus[0])
                 if (cpus.length == 1)
                 {
@@ -90,8 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         $("#lblCpu").css('display', 'none');
                         $("#divCpus").css('display', 'block');
                         // $("#divMemory").css('display', 'none');
+                        console.log('\n******** cpus[i].id_memory_value *********\n');
+                        console.log(cpus[i].id_memory_value);
 
-                        if (cpus[i].id_memory_value > 0)
+                        if (cpus[i].id_memory_value != '0')
                         {
                             let labelmem = cpus[i].id_memory_value;
 						

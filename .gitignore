@@ -7,4 +7,5 @@ myvenv
 .DS_Store
 data/git res
 tco_app/migrations
-backup_db.sqlite3
+*_.sqlite3
+*.txt
