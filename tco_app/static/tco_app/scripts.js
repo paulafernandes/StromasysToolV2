@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'use strict';
         window.addEventListener('load', function() {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
+            let forms = document.getElementsByClassName('needs-validation');
             // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
+            let validation = Array.prototype.filter.call(forms, function(form) {
                 form.addEventListener('submit', function(event) {
                     if (form.checkValidity() === false) {
                         event.preventDefault();
@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
             $("#divCurrency").css('display', 'none');
 		}
         else {
-            var url = "/simulation_page/" + $(this).val() + "/all_json_models/";
+            let url = "/simulation_page/" + $(this).val() + "/all_json_models/";
             $.getJSON(url, function(models) {
                 // console.log(JSON.stringify(models));
-                var options = '<option selected value="0">Select Model</option>';
-                for (var i = 0; i < models.length; i++) {
+                let options = '<option selected value="0">Select Model</option>';
+                for (let i = 0; i < models.length; i++) {
                     options += '<option value="' + models[i].pk + '">' + models[i].fields["model_name"] + '</option>';
 				}
                 $("#divModels").css('display', 'block');
@@ -57,12 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
         else {
             $("#divMemory").css('display', 'none');
-            var url = "/simulation_page/" + $(this).val() + "/all_json_cpus/";
+            let url = "/simulation_page/" + $(this).val() + "/all_json_cpus/";
             $.getJSON(url, function(cpus) {
-                var options = '<option selected value="">Select CPU</option>';
-                // var optionsmem = '<option selected value="">Select Memory</option>';
-                // console.log(JSON.stringify(cpus));
-                // console.log(cpus[0])
+                let options = '<option selected value="">Select CPU</option>';
                 if (cpus.length == 1)
                 {
                     $("#cpulabel").val(cpus[0].id_cpu_value);
@@ -72,26 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     $("#divMemory").css('display', 'none');
 				}
                 else {
-					for (var i = 0; i < cpus.length; i++) {
+					for (let i = 0; i < cpus.length; i++) {
                         let labelcpu = cpus[i].id_cpu_value;
-                        console.log(cpus[i])
+                        // console.log(cpus[i])
 
+                        if (cpus[i].id_memory_value != '0')
+                            labelcpu = labelcpu + ' (' + cpus[i].id_memory_value + ')';
 
-                        
                         options += '<option value="' + cpus[i].pk + '">' + labelcpu + '</option>';
 
-                        // if (cpus[i].id_memory_value > 0)
-                        // {
-                        //     optionsmem += '<option value="' + cpus[i].pk + '">' + labelmem + '</option>';
-                        //     $("select#allMemory").html(optionsmem);
-                        //     $("select#allMemory option:first").attr('selected', 'selected');
-                        //     $("#divMemory").attr('hasmem', '1');
-                        // }
-                        // else
-                        // {
-                        //     $("#divMemory").attr('hasmem', '0');
-                        //     $("select#allMemory").html(optionsmem);
-                        // }
                         $("select#allcpus").html(options);
                         $("select#allcpus option:first").attr('selected', 'selected');
                         $("#lblCpu").css('display', 'none');
@@ -109,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         pay = $('#txtPay').val();
         coin = $("select#allcurrency option:selected").val();
-        var idcpu;
+        let idcpu;
         if ($('#lblCpu').css('display') == 'block')
                 idcpu = $('#cpulabel').attr('cpuid');
         else
@@ -118,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pay != "" && coin != "" && idcpu != "") {      
             payperyear = $('#txtPay').val();
             currency = $( "#allcurrency option:selected" ).val();
-            var url = "/simulation_page/" + idcpu + "/" + payperyear + "/" + currency + "/json_simulation/";
+            let url = "/simulation_page/" + idcpu + "/" + payperyear + "/" + currency + "/json_simulation/";
             $.getJSON(url, function(savings) {
                 // console.log(JSON.stringify(savings));
                 $("#divSearch").css('display', 'none');

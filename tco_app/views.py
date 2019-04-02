@@ -38,7 +38,7 @@ def all_json_models(request, pk):
     return HttpResponse(json_models, content_type='application/javascript')
 
 def all_json_cpus(request, pk):
-    cpus = CpuTable.objects.filter(id_model=pk)
+    cpus = CpuTable.objects.filter(id_model=pk).order_by('id_cpu_value')
     # cpus = CpuTable.objects.all()
     cpu_lst = []
     for c in cpus:
