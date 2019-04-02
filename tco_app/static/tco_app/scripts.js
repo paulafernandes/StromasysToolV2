@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
             $("#divPay").css('display', 'none');
             $("#btnSim").css('display', 'none');
             $("#divCurrency").css('display', 'none');
-            $("#divMemory").css('display', 'none');
 		}
         else {
             var url = "/simulation_page/" + $(this).val() + "/all_json_models/";
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             $("#divPay").css('display', 'none');
             $("#btnSim").css('display', 'none');
             $("#divCurrency").css('display', 'none');
-            $("#divMemory").css('display', 'none');
 		}
     });
     
@@ -62,8 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
             var url = "/simulation_page/" + $(this).val() + "/all_json_cpus/";
             $.getJSON(url, function(cpus) {
                 var options = '<option selected value="">Select CPU</option>';
-                var optionsmem = '<option selected value="">Select Memory</option>';
-                console.log(JSON.stringify(cpus));
+                // var optionsmem = '<option selected value="">Select Memory</option>';
+                // console.log(JSON.stringify(cpus));
                 // console.log(cpus[0])
                 if (cpus.length == 1)
                 {
@@ -74,39 +72,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     $("#divMemory").css('display', 'none');
 				}
                 else {
-                    let previouslabel = '';
-
 					for (var i = 0; i < cpus.length; i++) {
                         let labelcpu = cpus[i].id_cpu_value;
-                        
-                        if (previouslabel != labelcpu)
-                        {
-                            options += '<option value="' + cpus[i].pk + '">' + labelcpu + '</option>';
-                            previouslabel = labelcpu;
-                        }
+                        console.log(cpus[i])
 
+
+                        
+                        options += '<option value="' + cpus[i].pk + '">' + labelcpu + '</option>';
+
+                        // if (cpus[i].id_memory_value > 0)
+                        // {
+                        //     optionsmem += '<option value="' + cpus[i].pk + '">' + labelmem + '</option>';
+                        //     $("select#allMemory").html(optionsmem);
+                        //     $("select#allMemory option:first").attr('selected', 'selected');
+                        //     $("#divMemory").attr('hasmem', '1');
+                        // }
+                        // else
+                        // {
+                        //     $("#divMemory").attr('hasmem', '0');
+                        //     $("select#allMemory").html(optionsmem);
+                        // }
                         $("select#allcpus").html(options);
                         $("select#allcpus option:first").attr('selected', 'selected');
                         $("#lblCpu").css('display', 'none');
                         $("#divCpus").css('display', 'block');
-                        // $("#divMemory").css('display', 'none');
-                        console.log('\n******** cpus[i].id_memory_value *********\n');
-                        console.log(cpus[i].id_memory_value);
-
-                        if (cpus[i].id_memory_value != '0')
-                        {
-                            let labelmem = cpus[i].id_memory_value;
-						
-                            optionsmem += '<option value="' + cpus[i].pk + '">' + labelmem + '</option>';
-                            $("select#allMemory").html(optionsmem);
-                            $("select#allMemory option:first").attr('selected', 'selected');
-                            $("#divMemory").attr('hasmem', '1');
-                        }
-                        else
-                        {
-                            $("#divMemory").attr('hasmem', '0');
-                            $("select#allMemory").html(optionsmem);
-                        }
 					}        
 				}
                 $("#divPay").css('display', 'block');
@@ -115,14 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 		}
     });	
-    
-    $("select#allcpus").on('change',  function() {
-        if ($("#divMemory").attr('hasmem') == '1')
-            $("#divMemory").css('display', 'block');
-        else
-        $("#divMemory").css('display', 'none');
-
-    });
 	
     $("#frmSim").on('submit',  function(event) {
         event.preventDefault();
@@ -148,11 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 $("#lbli_carbon_footprint_legacy").html(savings.i_carbon_footprint_legacy);
                 $("#lbli_carbon_footprint_savings").html(savings.i_carbon_footprint_savings);
             })
-            // **************************************
-            // error handling
-            // .done(function() { alert('getJSON request succeeded!'); })
-            // .fail(function(jqXHR, textStatus, errorThrown) { alert('getJSON request failed! ' + textStatus); })
-            // .always(function() { alert('getJSON request ended!'); });
         }
 	});
 });
